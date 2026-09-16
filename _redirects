@@ -1,0 +1,4 @@
+# Cloudflare Pages / Netlify 风格的 SPA 兜底规则
+# 任何未命中的路径都返回首页，HTTP 状态码 200（不会真的 404）
+# 注意：静态文件优先级高于本规则，/robots.txt 等真实文件仍会正常命中
+/*    /index.html    200

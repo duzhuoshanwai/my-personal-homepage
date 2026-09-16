@@ -1,0 +1,6 @@
+# 施工期间不希望被搜索引擎收录
+# 正式上线时改成下面两行，并删掉 index.html 里的 <meta name="robots" content="noindex, nofollow">
+User-agent: *
+Disallow: /
+
+Sitemap:
