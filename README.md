@@ -1,20 +1,19 @@
 # duzhuo.icu
 
-Personal placeholder page ("under construction"). Plain static HTML — no dependencies, no build step. Edit and deploy.
+Personal site for Junxiang Shao. Plain static HTML — no dependencies, no build step. Edit and deploy.
 
 ## Structure
 
 ```
 .
-├── index.html            # Home page (the placeholder itself)
+├── index.html            # Home page (hero + about)
 ├── 404.html              # Standalone 404 page
-├── robots.txt            # Blocks crawlers while under construction
-├── _redirects            # Catch-all: unknown paths → /index.html (200)
+├── robots.txt            # Crawler policy
 ├── favicon.ico           # Site icon
-├── favicon.svg           # Site icon (vector)
 ├── css/style.css         # Styles
-├── assets/construction.webp
+├── assets/my_avatar.webp # Avatar
 ├── .nojekyll             # Keeps GitHub Pages from running Jekyll
+├── .gitignore
 └── README.md
 ```
 
@@ -43,24 +42,45 @@ Opening `index.html` directly also works, but the absolute `/css/style.css` path
 
 | Goal | File |
 | --- | --- |
-| Change the text | `<div class="text">` in `index.html` |
-| Change accent/button colors | `:root` variables in `css/style.css` |
-| Change the icon | Replace `assets/construction.webp`, or edit the `<img>` `src` |
-| Change the button link | `<a class="button" href="...">` in `index.html` |
-| Go live | Replace `index.html`, then remove `Disallow: /` from `robots.txt` and the `<meta name="robots">` tag |
+| Change name / tagline / meta line | `<h1 class="hero-name">`, `.hero-tagline`, `.hero-meta` in `index.html` |
+| Change the avatar | Replace `src` on `<img class="avatar">` in `index.html` (keep `width` / `height` to avoid layout shift) |
+| Change the social links | `<nav class="links">` in `index.html` |
+| Change the email | Re-encode with `printf '%s' 'you@example.com' | base64` and update `data-b64` |
+| Fill in the About text | `<div class="prose">` in `index.html` |
+| Change accent colors | `:root` variables in `css/style.css` |
+
+## Layout decisions
+
+- Single `.container` capped at `720px`; the hero, divider, prose and footer
+  all share that edge, so nothing looks ragged on wide screens.
+- `.prose` deliberately has **no** `max-width`. A `60ch` cap reads better per
+  line but breaks the shared left/right edge. To trade alignment for
+  readability, add `max-width: 68ch` to `.prose`.
+- Body text is capped by the container rather than `ch`, so line length grows
+  with the viewport until `720px`. Below that it reflows freely.
+- `html { scrollbar-gutter: stable }` keeps pages with and without a scrollbar
+  from shifting horizontally.
 
 ## Notes
 
-- `_redirects` sends every unknown path to `/index.html` with a `200`, so no real 404s are returned. Fine for SPAs, but search engines may treat it as a soft 404. Remove it once the real site is up so `404.html` can do its job.
-- The image used to be hosted on `images.duzhuo.icu`. A copy now lives in `assets/` so the site is self-contained and works offline.
+- `404.html` is served automatically on Cloudflare Pages / GitHub Pages for
+  unknown paths — there is no SPA fallback (`_redirects` was removed).
+- `.nojekyll` must stay committed for GitHub Pages; it is intentionally not
+  ignored by `.gitignore`.
 
 ## Git
 
+The repo is already initialised; `master` tracks `origin/master`.
+
+After editing:
+
 ```bash
-git init
+git status
 git add -A
-git commit -m "init: duzhuo.icu placeholder site"
-git branch -M main
-git remote add origin git@github.com:<your-account>/<repo>.git
-git push -u origin main
+git commit -m "style: shorten the about section"
+git push
 ```
+
+Commit subjects follow [Conventional Commits](https://www.conventionalcommits.org/)
+(`feat`, `fix`, `style`, `chore`, `docs`), which keeps `git log --oneline`
+readable as the site grows.

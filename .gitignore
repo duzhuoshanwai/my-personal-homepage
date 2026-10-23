@@ -1,0 +1,20 @@
+# 依赖 / 构建产物
+node_modules/
+dist/
+.cache/
+.parcel-cache/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# 日志 / 本地环境
+*.log
+npm-debug.log*
+.env
+.env.*
+lefthook-local.yml
+
