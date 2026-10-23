@@ -1,17 +1,121 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>constructing</title>
-    <meta name="description" content="duzhuo.icu is currently constructing">
-    <meta name="robots" content="noindex, nofollow">
+    <title>Junxiang Shao &ndash; Student &amp; Tech Enjoyer</title>
+    <meta name="description"
+        content="Student at the University of Limerick. I use AI to learn and get things done, and share what I find on my blog.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-    <img src="/assets/construction.webp" class="construction-icon" alt="constructing">
-    <div class="text">Currently constructing</div>
-    <a href="https://blog.saint1337.top" class="button">My Blog</a>
+    <main class="container">
+
+        <!-- ==================== Hero / 身份区 ==================== -->
+        <header class="hero">
+            <img class="avatar" src="/assets/my_avatar.webp" alt="Junxiang Shao" width="120" height="120"
+                decoding="async">
+
+            <h1 class="hero-name">Junxiang Shao</h1>
+
+            <p class="hero-tagline">
+                Student at the University of Limerick — learning with AI and sharing what works.
+            </p>
+
+            <p class="hero-meta">
+                Limerick, Ireland &middot; love tinkering &middot; AI-Assisted Learning &middot; Blogging
+            </p>
+
+            <nav class="links" aria-label="Links">
+                <a class="link" href="https://blog.saint1337.top">Blog</a>
+                <a class="link" href="https://github.com/duzhuoshanwai">GitHub</a>
+                <button class="link" type="button" id="email-copy" data-b64="c2hhb0BkdXpodW8uaWN1">Email</button>
+            </nav>
+
+            <noscript>
+                <p class="hero-meta">Reach me at: shao [at] duzhuo.icu</p>
+            </noscript>
+        </header>
+
+        <hr class="divider">
+
+        <!-- ==================== About ==================== -->
+        <section class="section" id="about">
+            <h2 class="section-title">About</h2>
+
+            <div class="prose">
+                <p>
+                    I’m a Year 2 student in the Computer Systems program at the University of
+                    Limerick. I transferred to UL after earning a Diploma in Information Security
+                    Technology Application from Beijing Polytechnic College, and I also have
+                    experience working as a technical assistant on a system integration team.
+                </p>
+
+                <p>
+                    Outside of coursework, I have some background in development, operations,
+                    and networking. I like putting that to use by writing small scripts to
+                    automate the boring stuff — I’d rather spend an hour automating a task than
+                    do it by hand ten times. I also try to contribute to open-source projects
+                    whenever I spot something I can help with. When I’m not doing that, I’m
+                    probably playing Dota 2.
+                </p>
+
+                <p>
+                    I also write about what I learn. My blog is where I share those notes and
+                    experiments into something my friends (and anyone else) can use. If
+                    something here helps you, or you just want to say hi, feel free to reach
+                    out.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="container footer">
+        <p>© 2026 Junxiang Shao · Built with Vanilla HTML</p>
+    </footer>
+
+    <!-- 邮箱复制：放在 </body 前，确保 #email-copy 已解析 -->
+    <script>
+        (function () {
+            const btn = document.getElementById('email-copy');
+            if (!btn) return;
+
+            const email = atob(btn.dataset.b64);
+            const label = btn.textContent;
+
+            function flash() {
+                btn.textContent = 'Copied';
+                setTimeout(() => (btn.textContent = label), 1500);
+            }
+
+            btn.addEventListener('click', async function () {
+                try {
+                    await navigator.clipboard.writeText(email);
+                    flash();
+                } catch {
+                    // 非安全上下文（如 file://）或权限被拒时的兜底
+                    const ta = document.createElement('textarea');
+                    ta.value = email;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try {
+                        document.execCommand('copy');
+                        flash();
+                    } catch {
+                        alert('Copy failed, email: ' + email);
+                    }
+                    ta.remove();
+                }
+            });
+        })();
+    </script>
 </body>
+
 </html>
